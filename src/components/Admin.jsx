@@ -6,7 +6,9 @@ const Admin = () => {
 
   useEffect(() => {
     const fetchAdmin = async () => {
-      const res = await fetch('http://localhost:8000/api/v0/admin');
+      const res = await fetch(
+        'https://comp-4537-term-project-7zchu.ondigitalocean.app/api/v0/admin'
+      );
       const { apiCounts } = await res.json();
 
       console.log(apiCounts);
