@@ -6,14 +6,16 @@ import {
   Route,
 } from 'react-router-dom';
 import Admin from './components/Admin';
+import Doc from './components/Doc';
 import Home from './components/Home';
 
 const App = () => {
   return (
     <HashRouter basename='/'>
       <Switch>
-        <Route path='/admin' exact component={Admin} />
         <Route path='/' exact component={Home} />
+        <Route path='/admin' exact component={Admin} />
+        <Route path='/doc' exact component={Doc} />
       </Switch>
     </HashRouter>
   );

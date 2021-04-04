@@ -17,6 +17,9 @@ const Home = () => {
         <li>
           <Link to='/create'>Create / Edit quizzes</Link>
         </li>
+        <li>
+          <Link to='/doc'>Docs</Link>
+        </li>
       </ul>
     </nav>
   );
