@@ -15,7 +15,7 @@ const App = () => {
       <Switch>
         <Route path='/' exact component={Home} />
         <Route path='/admin' exact component={Admin} />
-        <Route path='/doc' exact component={Doc} />
+        <Route path='/docs' exact component={Doc} />
       </Switch>
     </HashRouter>
   );
