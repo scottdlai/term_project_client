@@ -12,6 +12,9 @@ const Home = () => {
           <Link to='/quizzes'>Create quizzes</Link>
         </li>
         <li>
+          <Link to='/getquizzes'>View quizzes</Link>
+        </li>
+        <li>
           <Link to='/submissions'>View Submissions</Link>
         </li>
         <li>
