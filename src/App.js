@@ -9,6 +9,7 @@ import Admin from './components/Admin';
 import Doc from './components/Doc';
 import Home from './components/Home';
 import CreateQuiz from './components/CreateQuiz';
+import Quizzes from './components/Quizzes'
 
 const App = () => {
   return (
@@ -18,6 +19,8 @@ const App = () => {
         <Route path='/admin' exact component={Admin} />
         <Route path='/docs' exact component={Doc} />
         <Route path='/quizzes' exact component={CreateQuiz} />
+        <Route path='/getquizzes' exact component={Quizzes} />
+
       </Switch>
     </HashRouter>
   );
