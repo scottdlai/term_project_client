@@ -9,7 +9,7 @@ const Home = () => {
           <Link to='/admin'>Admin</Link>
         </li>
         <li>
-          <Link to='/quizzes'>Take quizzes</Link>
+          <Link to='/quizzes'>Create quizzes</Link>
         </li>
         <li>
           <Link to='/submissions'>View Submissions</Link>

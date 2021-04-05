@@ -1,0 +1,34 @@
+textarea {
+  width: 80%;
+  height: 60px;
+  font-family: 'Courier New', Courier, monospace;
+  padding: 12px;
+  font-size: 1.1rem;
+}
+
+textarea.question-area {
+  height: 84px;
+}
+
+button {
+  display: block;
+}
+
+.quiz-name {
+  font-weight: bold;
+  font-size: 2rem;
+}
+
+input.quiz-name {
+  border: none;
+  border-bottom: 1px solid black;
+  margin-bottom: 12px;
+}
+
+button {
+  font-size: 1.1rem;
+  border: none;
+  background-color: #13669c;
+  color: white;
+  margin: 12px;
+}
