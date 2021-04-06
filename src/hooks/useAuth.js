@@ -6,13 +6,15 @@ import {
   useState,
 } from 'react';
 
-const AuthContext = createContext('');
+const AuthContext = createContext(localStorage.getItem('token'));
 
 const useProvideAuth = () => {
-  const [token, setToken] = useState();
+  const [token, setToken] = useState(localStorage.getItem('token'));
 
   useEffect(() => {
-    console.log(token);
+    if (token) {
+      localStorage.setItem('token', token);
+    }
   }, [token]);
 
   const login = useCallback(

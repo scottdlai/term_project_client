@@ -112,6 +112,8 @@ const CreateQuiz = () => {
       }
     );
     window.alert('Added quiz');
+    setQuizName('');
+    questionsDispatch('RESET');
   }, [quizName, questions]);
 
   return token ? (
