@@ -1,27 +1,39 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
+import Home from './Home';
 
 const Login = () => {
-  const { login } = useAuth();
+  const { push } = useHistory();
+  const { login, token } = useAuth();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   // Returns jsx here
-  return (
+  return token ? (
+    <Home />
+  ) : (
     <div>
-      <input
-        type='text'
-        value={username}
-        onChange={({ target: { value } }) => setUsername(value)}
-      />
+      <h1>Log in</h1>
+      <div>
+        <input
+          type='text'
+          value={username}
+          placeholder='Username'
+          onChange={({ target: { value } }) => setUsername(value)}
+        />
+      </div>
 
-      <input
-        type='password'
-        value={password}
-        onChange={({ target: { value } }) => setPassword(value)}
-      />
-
+      <div>
+        <input
+          type='password'
+          value={password}
+          placeholder='Password'
+          onChange={({ target: { value } }) => setPassword(value)}
+        />
+      </div>
       <button onClick={() => login(username, password)}>Login</button>
+      <button onClick={() => push('/register')}>Register</button>
     </div>
   );
 };

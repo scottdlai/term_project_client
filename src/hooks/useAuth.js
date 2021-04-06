@@ -43,16 +43,42 @@ const useProvideAuth = () => {
     [setToken]
   );
 
-  return { token, login };
+  const register = useCallback(
+    async (username, password) => {
+      try {
+        const res = await fetch(
+          'https://comp-4537-term-project-7zchu.ondigitalocean.app/auth/register',
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password }),
+          }
+        );
+
+        if (!res.ok) {
+          throw new Error();
+        }
+
+        const { token } = await res.json();
+
+        setToken(token);
+      } catch (err) {
+        window.alert('Username already existed!');
+      }
+    },
+    [setToken]
+  );
+
+  return { token, login, register };
 };
 
 const useAuth = () => useContext(AuthContext);
 
 const AuthProvider = ({ children }) => {
-  const { token, login } = useProvideAuth();
+  const { token, login, register } = useProvideAuth();
 
   return (
-    <AuthContext.Provider value={{ token, login }}>
+    <AuthContext.Provider value={{ token, login, register }}>
       {children}
     </AuthContext.Provider>
   );
