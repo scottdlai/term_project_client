@@ -106,12 +106,14 @@ const CreateQuiz = () => {
         mode: 'cors',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `beaer ${token}`,
+          Authorization: `bearer ${token}`,
         },
         body: JSON.stringify({ quizName, questions }),
       }
     );
     window.alert('Added quiz');
+    setQuizName('');
+    questionsDispatch('RESET');
   }, [quizName, questions]);
 
   return token ? (
