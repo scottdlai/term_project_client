@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom';
+
+
 
 const Quizzes = () => {
     // const [quizzes, setQuizzes] = useState([])
-     
+
     const quizzes = [
         {
             "id": 13,
@@ -34,10 +37,17 @@ const Quizzes = () => {
     return true ? (
         <div>
             <h1>Quiz List - Quizzes</h1>
-            {quizzes.map(({ quizName, createdAt }, quizIndex) => { return (
-                <div>
+            {quizzes.map(({ id, quizName, createdAt }, quizIndex) => {
+                const newTo = { 
+                    pathname: "/quiz", 
+                    id: id,
+                    name: {quizName}
+                };
+                return (
+                
+                <div key={`quiz-${id}`}>
                     <h5>{quizIndex + 1}</h5>
-                    <h3>{quizName}</h3>
+                    <Link to={newTo}><h3>{quizName}</h3></Link>
                     <h4>{createdAt}</h4>
                 </div>
             );
