@@ -1,6 +1,8 @@
-import React, { useEffect, useReducer, useState, useCallback } from 'react';
+import React, { useReducer, useState, useCallback } from 'react';
+import { useAuth } from '../hooks/useAuth';
 import setValueAtIndex from '../utils/setValueAtIndex';
 import './CreateQuiz.css';
+import Login from './Login';
 
 const questionsReducer = (
   questions,
@@ -69,6 +71,8 @@ const CreateQuiz = () => {
 
   const [questions, questionsDispatch] = useReducer(questionsReducer, []);
 
+  const { token } = useAuth();
+
   const createQuiz = useCallback(async () => {
     if (!quizName) {
       setQuizName("Name can't be empty");
@@ -102,6 +106,7 @@ const CreateQuiz = () => {
         mode: 'cors',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `beaer ${token}`,
         },
         body: JSON.stringify({ quizName, questions }),
       }
@@ -109,7 +114,7 @@ const CreateQuiz = () => {
     window.alert('Added quiz');
   }, [quizName, questions]);
 
-  return (
+  return token ? (
     <div>
       <input
         type='text'
@@ -181,6 +186,8 @@ const CreateQuiz = () => {
       </button>
       <button onClick={createQuiz}>Add Quiz</button>
     </div>
+  ) : (
+    <Login />
   );
 };
 

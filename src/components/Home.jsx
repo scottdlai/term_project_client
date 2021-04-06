@@ -1,8 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../hooks/useAuth';
+import Login from './Login';
 
 const Home = () => {
-  return (
+  const { token } = useAuth();
+
+  return token ? (
     <nav>
       <ul>
         <li>
@@ -25,6 +29,8 @@ const Home = () => {
         </li>
       </ul>
     </nav>
+  ) : (
+    <Login />
   );
 };
 

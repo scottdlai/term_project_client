@@ -1,47 +1,36 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
+import { useAuth } from '../hooks/useAuth';
 import { Link } from 'react-router-dom';
-
-
+import Login from './Login';
 
 const Quizzes = () => {
-    // const [quizzes, setQuizzes] = useState([])
+  const [quizzes, setQuizzes] = useState([]);
+  const { token } = useAuth();
 
-    const quizzes = [
-        {
-            "id": 13,
-            "quizName": "math",
-            "createdAt": "2021-04-03T07:00:00.000Z"
-        },
-        {
-            "id": 14,
-            "quizName": "english",
-            "createdAt": "2021-04-03T07:00:00.000Z"
-        }
-    ]
+  useEffect(() => {
+    const fetchQuizzes = async () => {
+      const res = await fetch(
+        'https://comp-4537-term-project-7zchu.ondigitalocean.app/api/v0/quizzes',
+        { method: 'GET', headers: { Authorization: `bearer ${token}` } }
+      );
 
-    // useEffect(()=> {
-    //     const fetchQuizzes = async () => {
-    //         const res = await fetch(
-    //             'https://comp-4537-term-project-7zchu.ondigitalocean.app/api/v0/quizzes'
-    //         );
-    //         const { quizzes } = await res.json(); 
+      const quizzes = await res.json();
 
-    //         console.log(quizzes)
-    //         setQuizzes(quizzes)
+      console.log(quizzes);
+      setQuizzes(quizzes);
+    };
 
-    //     };
+    fetchQuizzes();
+  }, []);
 
-    //     fetchQuizzes();
-    // }, [])
-
-    return true ? (
+    return token ? (
         <div>
             <h1>Quiz List - Quizzes</h1>
             {quizzes.map(({ id, quizName, createdAt }, quizIndex) => {
                 const newTo = { 
                     pathname: "/quiz", 
                     id: id,
-                    name: {quizName}
+                    name: quizName
                 };
                 return (
                 
@@ -54,8 +43,8 @@ const Quizzes = () => {
         })}
         </div>
         ) : (
-        <h1>Loadding...</h1>
-        )
+            <Login />
+          );
 }
 
-export default Quizzes
+export default Quizzes;
