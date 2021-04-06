@@ -1,5 +1,5 @@
-import { useEffect, useState, useCallback } from 'react'
-import { useAuth } from './../hooks/useAuth'
+import { useEffect, useState, useCallback } from 'react';
+import { useAuth } from './../hooks/useAuth';
 
 // const choiceReducer = (choices, { action, choiceIndex, value}) => {
 //     if (action.toUpperCase() === 'CHOICE_SELECT_CHANGE') {
@@ -9,79 +9,74 @@ import { useAuth } from './../hooks/useAuth'
 //     }
 // }
 
-const Quiz = (props) => {
-    
-    const { token } = useAuth();
-    
-    const [quizName, setQuizName] = useState('')
-    const [questions, setQuestions] = useState([])
+const Quiz = ({ location: { id, name } }) => {
+  const { token } = useAuth();
 
+  const [quizName, setQuizName] = useState('');
+  const [questions, setQuestions] = useState([]);
 
-    const postChoices = useCallback(async () => {
-        // validations
+  const postChoices = useCallback(async () => {
+    // validations
 
+    await fetch(
+      `https://comp-4537-term-project-7zchu.ondigitalocean.app/api/submissions/:${id}`,
+      {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json',
+          autorization: `brearer ${token}`,
+        },
+        body: JSON.stringify({}),
+      }
+    );
+  }, []);
 
-        await fetch(
-            `https://comp-4537-term-project-7zchu.ondigitalocean.app/api/submissions/:${props.location.id}`,
-            {
-                method: 'POST',
-                mode: 'cors',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'autorization': `brearer ${token}`
-                },
-                body: JSON.stringify({  })
-            }
-        )
-    }, [])
+  console.log(id, typeof id);
+  console.log(name, typeof name);
 
-    console.log(props.location.id, typeof props.location.id)
-    console.log(props.location.name, typeof props.location.name)
-
-    useEffect(()=> {
-        const fetchQuiz = async () => {
-            console.log("CHECKPOINT  " + props.location.id)
-            const res = await fetch(
-                `https://comp-4537-term-project-7zchu.ondigitalocean.app/api/v0/quizzes/${props.location.id}`,
-                {
-                    method: 'GET',
-                    headers: { 
-                        'Content-type': 'application/json',
-                        Authorization: `bearer ${token}`
-                    },
-                }
-                );
-            
-            const { quizName, questions } = await res.json();
-
-            console.log(questions)
-            console.log(quizName)
-
-            setQuizName(quizName)
-            console.log(quizName)
-            setQuestions(questions.map(({choices, ...question}) => ({
-                ...question,
-                choices: choices.map((choice) => ({...choice, isChecked: false}))
-            })))
-
+  useEffect(() => {
+    const fetchQuiz = async () => {
+      console.log('CHECKPOINT  ' + id);
+      const res = await fetch(
+        `https://comp-4537-term-project-7zchu.ondigitalocean.app/api/v0/quizzes/${id}`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-type': 'application/json',
+            Authorization: `bearer ${token}`,
+          },
         }
+      );
 
-        fetchQuiz();
-    }, [props.location.id])
+      const { quizName, questions } = await res.json();
 
-    return (
-        <div>
-            {questions.map(({ choices, ...rest }) => {
-                console.log(choices)
-                return (
-                    <div>
-                        hello
-                    </div>
-                )
-            })}
-            <button onClick={postChoices}>Submit</button>
-        </div>
-    )
-}
+      console.log(questions);
+      console.log(quizName);
 
-export default Quiz
+      setQuizName(quizName);
+      console.log(quizName);
+      setQuestions(
+        questions.map(({ choices, ...question }) => ({
+          ...question,
+          choices: choices.map((choice) => ({ ...choice, isChecked: false })),
+        }))
+      );
+    };
+
+    fetchQuiz();
+  }, [id]);
+
+  return (
+    <div>
+      <h1>{name}</h1>
+      {questions.map(({ choices, ...rest }) => {
+        console.log(choices);
+        return <div>hello</div>;
+      })}
+      <button onClick={postChoices}>Submit</button>
+    </div>
+  );
+};
+
+export default Quiz;
