@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useState, useCallback } from 'react';
+import React, { useReducer, useState, useCallback } from 'react';
 import setValueAtIndex from '../utils/setValueAtIndex';
 import './CreateQuiz.css';
 
