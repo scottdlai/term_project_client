@@ -1,25 +1,16 @@
 import { useState, useEffect } from 'react';
+import { useAuth } from '../hooks/useAuth';
+import Login from './Login';
 
 const Quizzes = () => {
   const [quizzes, setQuizzes] = useState([]);
-
-  // const quizzes = [
-  //   {
-  //     id: 13,
-  //     quizName: 'math',
-  //     createdAt: '2021-04-03T07:00:00.000Z',
-  //   },
-  //   {
-  //     id: 14,
-  //     quizName: 'english',
-  //     createdAt: '2021-04-03T07:00:00.000Z',
-  //   },
-  // ];
+  const { token } = useAuth();
 
   useEffect(() => {
     const fetchQuizzes = async () => {
       const res = await fetch(
-        'https://comp-4537-term-project-7zchu.ondigitalocean.app/api/v0/quizzes'
+        'https://comp-4537-term-project-7zchu.ondigitalocean.app/api/v0/quizzes',
+        { method: 'GET', headers: { Authorization: `bearer ${token}` } }
       );
 
       const quizzes = await res.json();
@@ -31,7 +22,7 @@ const Quizzes = () => {
     fetchQuizzes();
   }, []);
 
-  return true ? (
+  return token ? (
     <div>
       <h1>Quiz List - Quizzes</h1>
       {quizzes.map(({ quizName, createdAt, id }, quizIndex) => {
@@ -45,7 +36,7 @@ const Quizzes = () => {
       })}
     </div>
   ) : (
-    <h1>Loadding...</h1>
+    <Login />
   );
 };
 
