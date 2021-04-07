@@ -12,8 +12,10 @@ body {
     sans-serif;
   font-family: 'Indie Flower', cursive;
   font-weight: bold;
+  color: #f3f4ed;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #eeeded;
 }
 
 * {

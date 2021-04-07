@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { Link } from 'react-router-dom';
 import Login from './Login';
+import './Quizzes.css'
 
 const Quizzes = () => {
   const [quizzes, setQuizzes] = useState([]);
@@ -24,8 +25,8 @@ const Quizzes = () => {
   }, []);
 
     return token ? (
-        <div>
-            <h1>Quiz List - Quizzes</h1>
+        <div className={'wholeWrapper'}>
+            <h1 className={'pageTitle'}>Quiz List - Quizzes</h1>
             {quizzes.map(({ id, quizName, createdAt }, quizIndex) => {
                 const newTo = { 
                     pathname: "/quiz", 
@@ -33,12 +34,14 @@ const Quizzes = () => {
                     name: quizName
                 };
                 return (
-                
-                <div key={`quiz-${id}`}>
-                    <h5>{quizIndex + 1}</h5>
-                    <Link to={newTo}><h3>{quizName}</h3></Link>
-                    <h4>{createdAt}</h4>
-                </div>
+
+                <Link className={'link'} to={newTo}>
+                    <div className={'gridContainer'} key={`quiz-${id}`}>
+                        <h5 className={'indexSection'}>{quizIndex + 1}</h5>
+                        <h3 className={'nameSection'}>{quizName}</h3>
+                        <h4 className={'dateSection'}>{createdAt}</h4>
+                    </div>
+                </Link>
             );
         })}
         </div>

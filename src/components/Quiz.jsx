@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback } from 'react';
 import setValueAtIndex from '../utils/setValueAtIndex';
 import { useAuth } from './../hooks/useAuth';
+import './Quiz.css'
 
 const Quiz = ({ location: { id, name } }) => {
   const { token } = useAuth();

@@ -7,12 +7,12 @@ a {
 }
 
 .menuItem {
-    background-color: #ff564a;
+    background-color: #5c6e91;
     border-radius: 10px;
     margin: 2em auto;
     padding: 1em;
     width: 50%;
-    transition: all 0.5s ease-out;
+    transition: all 0.4s ease-out;
 }
 
 .menuItem:hover {
@@ -24,7 +24,7 @@ a {
 }
 
 .linkItem {
-    color: white;
+    color: #f3f4ed;
     font-size: 2em;
 }
 
