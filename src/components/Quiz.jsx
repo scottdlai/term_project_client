@@ -84,17 +84,18 @@ const Quiz = ({ location: { id, name } }) => {
   }, [id]);
 
   return (
-    <div>
-      <h2>{quizName}</h2>
+    <div className={'quizWrapper'}>
+      <h2 className={'quizTitle'}>{quizName}</h2>
       {questions.map(({ questionID, questionBody, choices }, i) => {
         return (
-          <div key={questionID}>
-            <h3>{i + 1}</h3>
-            <div>{questionBody}</div>
+          <div className={'questionWrapper'} key={questionID}>
+            <h3 className={'questionNumber'}>{i + 1}</h3>
+            <h3 className={'questionTitle'}>{questionBody}</h3>
             {choices.map(({ choiceID, choiceBody, isChecked }, j) => {
               return (
-                <div key={choiceID}>
+                <div className={'choiceWrapper'} key={choiceID}>
                   <input
+                    className={'radioBtn'}
                     type='radio'
                     checked={isChecked}
                     onChange={() => {
@@ -116,14 +117,14 @@ const Quiz = ({ location: { id, name } }) => {
                       );
                     }}
                   />
-                  <span>{choiceBody}</span>
+                  <span className={'choiceText'}>{choiceBody}</span>
                 </div>
               );
             })}
           </div>
         );
       })}
-      <button onClick={postChoices}>Submit</button>
+      <button className={'submitBtn'} onClick={postChoices}>Submit</button>
     </div>
   );
 };
