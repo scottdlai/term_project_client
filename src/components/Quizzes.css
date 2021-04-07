@@ -22,6 +22,7 @@
     margin-bottom: 3em;
     margin-top: 0;
     font-size: 2.5em;
+    text-align: center;
 }
 
 .gridContainer {
@@ -35,7 +36,7 @@
     padding: 3em 0em;
     background: #5c6e91;
     border-radius: 15px;
-    transition: all 0.4s ease-in;
+    transition: all 0.4s ease-out;
     transition: background-color 1s ease-out; 
 }
 

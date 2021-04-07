@@ -2,9 +2,42 @@ div.container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid black;
+  border: 3px solid black;
   padding: 12px;
-  width: 60vw;
+  color: black;
+  margin-bottom: 1.5em;
+  border-radius: 25px;
+  transition: all 0.2s ease-in-out;
+}
+
+div.container:hover {
+  opacity: 0.5;
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+.DELETEcontainer {
+  background-color: #ff4d36;
+}
+
+.GETcontainer {
+  background-color: #b7d0e8;
+}
+
+.POSTcontainer {
+  background-color:#88ff6e;
+
+}
+
+.PUTcontainer {
+  background-color: #f3ff85;
+}
+
+.adminTitle {
+  color: black;
+  font-size: 3em;
+  margin-bottom: 1.5em;
+  text-align: center;
 }
 
 span.method {
@@ -14,4 +47,8 @@ span.method {
 
 span.count {
   font-weight: bold;
+}
+
+.loadingTxt {
+  color: black;
 }

@@ -33,12 +33,12 @@ const Admin = () => {
   return token ? (
     apiCounts.length > 0 ? (
       <div id='container-admin'>
-        <h1>Dash board</h1>
+        <h1 className={'adminTitle'}>Dash board</h1>
         {apiCounts.map(({ apiName, count }) => {
           const [method, endpoint] = apiName.split(' ');
 
           return (
-            <div key={apiName} className='container'>
+            <div key={apiName} className={`container ${method}container`}>
               <span className='method'>{method}</span>
               <span className='endpoint'>{endpoint}</span>
               <span className='count'>{count}</span>
@@ -47,7 +47,7 @@ const Admin = () => {
         })}
       </div>
     ) : (
-      <h1>Loadding...</h1>
+      <h1 className={'loadingTxt'}>Loading...</h1>
     )
   ) : (
     <Login />
