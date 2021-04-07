@@ -1,34 +1,90 @@
-textarea {
-  width: 80%;
-  height: 60px;
-  font-family: 'Courier New', Courier, monospace;
-  padding: 12px;
-  font-size: 1.1rem;
-}
-
-textarea.question-area {
-  height: 84px;
-}
-
-button {
-  display: block;
+.createQuizContainer {
+  text-align: center;
+  color: black;
+  padding-bottom: 2em;
 }
 
 .quiz-name {
   font-weight: bold;
+  text-align: center;
   font-size: 2rem;
+  padding: 0.2em 1em;
+  border: none;
+  border-radius: 15px;
+  margin: 2em auto;
+  -webkit-box-shadow: 0px 15px 40px 3px rgba(0,0,0,0.7); 
+  box-shadow: 0px 15px 40px 3px rgba(0,0,0,0.7);
+  transition: all 0.3s ease-out;
 }
 
-input.quiz-name {
-  border: none;
-  border-bottom: 1px solid black;
-  margin-bottom: 12px;
+.quiz-name:hover {
+  transform: scale(1.1);
+  /* cursor: pointer; */
 }
 
-button {
-  font-size: 1.1rem;
-  border: none;
-  background-color: #13669c;
+.questionIndex {
+  margin: 2em auto;
+  font-size: 1.5em;
+}
+
+
+.decoRadioBtn {
+  visibility: hidden;
+}
+
+.choiceContainer {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: baseline;
+}
+
+.txtInput {
+  width: 50%;
+  height: 100px;
+  font-size: 1.5em;
+  margin: 1em auto;
+}
+
+.radioBtn-createQuiz {
+  display: inline-block;
+  transform: scale(1.5) translateY(2em);
+  transition: all 0.3s ease-out;
+}
+
+.radioBtn-createQuiz:hover {
+  cursor: pointer;
+  transform: scale(2) translateY(1.5em);
+}
+
+.addBtn {
+  margin: 2em auto;
+  width: 32%;
+  padding: 1em 3em;
+  border-radius: 15px;
+  background-color: #5c6e91;
   color: white;
-  margin: 12px;
+  font-weight: bold;
+  font-size: 1.2em;
+  border: none;
+  display: block;
+
+
+}
+
+.addBtn:hover {
+  cursor: pointer;
+  background-color: #a6c4ff;
+}
+
+.addQuiz {
+  margin-top: 10em;
+  transition: all .7s ease-out;
+}
+
+.addQuiz:hover {
+  cursor: pointer;
+  background-color: #abd2ff;
+  transform: scale(1.2);
+  -webkit-box-shadow: 0px 30px 35px 5px rgba(0,0,0,0.85); 
+  box-shadow: 0px 30px 35px 5px rgba(0,0,0,0.85);
 }

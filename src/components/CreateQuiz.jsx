@@ -117,10 +117,10 @@ const CreateQuiz = () => {
   }, [quizName, questions]);
 
   return token ? (
-    <div>
+    <div className={'createQuizContainer'}>
       <input
         type='text'
-        className='quiz-name'
+        className={'quiz-name'}
         value={quizName}
         placeholder='Enter name of quiz'
         onChange={({ target: { value } }) => setQuizName(value)}
@@ -129,9 +129,10 @@ const CreateQuiz = () => {
       {questions.map(({ body, choices }, questionIndex) => {
         return (
           <div key={questionIndex}>
-            <h3>Question {questionIndex + 1}</h3>
+            <h3 className={'questionIndex'}>Question {questionIndex + 1}</h3>
+            <input className={'decoRadioBtn'} type='radio' />
             <textarea
-              className='question-area'
+              className={'txtInput quiz-title'}
               value={body}
               placeholder='Enter question'
               onChange={({ target: { value } }) => {
@@ -145,8 +146,9 @@ const CreateQuiz = () => {
             <br />
             {choices.map(({ isCorrect, body }, choiceIndex) => {
               return (
-                <div key={choiceIndex}>
+                <div className={'choiceContainer'} key={choiceIndex}>
                   <input
+                    className={'radioBtn-createQuiz'}
                     type='radio'
                     checked={isCorrect}
                     onChange={() => {
@@ -158,6 +160,7 @@ const CreateQuiz = () => {
                     }}
                   />
                   <textarea
+                    className={'txtInput'}
                     value={body}
                     onChange={({ target: { value } }) => {
                       questionsDispatch({
@@ -172,6 +175,7 @@ const CreateQuiz = () => {
               );
             })}
             <button
+              className={'addBtn'}
               key={`button-${questionIndex}`}
               onClick={() =>
                 questionsDispatch({ action: 'ADD_CHOICE', questionIndex })
@@ -183,10 +187,10 @@ const CreateQuiz = () => {
           </div>
         );
       })}
-      <button onClick={() => questionsDispatch({ action: 'ADD_QUESTION' })}>
+      <button className={'addBtn'} onClick={() => questionsDispatch({ action: 'ADD_QUESTION' })}>
         Add question
       </button>
-      <button onClick={createQuiz}>Add Quiz</button>
+      <button className={'addBtn addQuiz'} onClick={createQuiz}>Add Quiz</button>
     </div>
   ) : (
     <Login />
