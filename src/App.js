@@ -15,6 +15,7 @@ import { AuthProvider } from './hooks/useAuth';
 import Login from './components/Login';
 import Register from './components/Register';
 import ViewSubmission from './components/ViewSubmission'
+import EditQuiz from './components/EditQuiz';
 
 const App = () => {
   return (
@@ -30,6 +31,7 @@ const App = () => {
           <Route path='/register' exact component={Register} />
           <Route path='/quiz' exact component={Quiz} />
           <Route path='/submissions' exact component={ViewSubmission} />
+          <Route path='/edit' exact component={EditQuiz} />
         </Switch>
       </HashRouter>
     </AuthProvider>
