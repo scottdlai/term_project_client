@@ -35,7 +35,7 @@ const Quizzes = () => {
                 };
 
                 const toEdit = {
-                  pathname: "",
+                  pathname: "/",
                   id: id,
                   name: quizName
                 };
