@@ -63,8 +63,8 @@ const Quiz = ({ location: { id, name } }) => {
             Authorization: `bearer ${token}`,
           },
         }
-      );
-
+    );
+      
       const { quizName, questions } = await res.json();
 
       console.log(questions);

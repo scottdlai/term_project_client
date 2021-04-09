@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Parisienne&display=swap');
+
+.submissionWrapper {
+    color: black;
+    font-family: 'Parisienne', cursive;
+}
+
+.submissionCard {
+    width: 50%;
+    margin: 3em auto;
+    border: 5px solid white;
+    background-color: #5c6e91;
+    padding: 1em;
+    border-radius: 20px;
+}
+
+.submissionCardusername {
+    background-color: white;
+    width: 60%;
+    margin: 1em auto;
+    text-align: center;
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 0.3em
+}
+
+.submissionCardScore {
+    background-color: white;
+    width: 60%;
+    margin: 1em auto;
+    text-align: center;
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 0.3em
+}
+
+.submissionCardDate {
+    background-color: white;
+    width: 60%;
+    margin: 1em auto;
+    text-align: center;
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 0.3em;
+    /* font-size: 1.3em; */
+}
+
+
+.yearText {
+    display: block;
+}
