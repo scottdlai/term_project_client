@@ -19,9 +19,9 @@ const Home = () => {
         <li className={'menuItem'}>
           <Link className={'linkItem'} to='/getquizzes'>View quizzes</Link>
         </li>
-        <li className={'menuItem'}>
+        {/* <li className={'menuItem'}>
           <Link className={'linkItem'} to='/submissions'>View Submissions</Link>
-        </li>
+        </li> */}
         <li className={'menuItem'}>
           <Link className={'linkItem'} to='/create'>Create / Edit quizzes</Link>
         </li>

@@ -28,20 +28,46 @@ const Quizzes = () => {
         <div className={'wholeWrapper'}>
             <h1 className={'pageTitle'}>Quiz List - Quizzes</h1>
             {quizzes.map(({ id, quizName, createdAt }, quizIndex) => {
-                const newTo = { 
+                const toTake = { 
                     pathname: "/quiz", 
                     id: id,
                     name: quizName
                 };
-                return (
 
-                <Link className={'link'} to={newTo}>
-                    <div className={'gridContainer'} key={`quiz-${id}`}>
-                        <h5 className={'indexSection'}>{quizIndex + 1}</h5>
-                        <h3 className={'nameSection'}>{quizName}</h3>
-                        <h4 className={'dateSection'}>{createdAt}</h4>
-                    </div>
-                </Link>
+                const toEdit = {
+                  pathname: "",
+                  id: id,
+                  name: quizName
+                };
+
+                const toView = {
+                  pathname: "/submissions",
+                  id: id,
+                  name: quizName
+                };
+
+                return (
+                  <div className={'gridContainer'} key={`quiz-${id}`}>
+                      <h5 className={'indexSection'}>{quizIndex + 1}</h5>
+                      <h3 className={'nameSection'}>{quizName}</h3>
+                      <h4 className={'dateSection'}>{createdAt}</h4>
+                      <div className={'cardMenuContainer'}>
+                        <nav>
+                          <ul className={'cardUL'}>
+                            <li className={'menuList'}>
+                              <Link className={'link'} to={toTake}>Take Quiz</Link>
+                            </li>
+                            <li className={'menuList'}>
+                              <Link className={'link'} to={toEdit}>Edit Quiz</Link>
+                            </li>
+                            <li className={'menuList'}>
+                              <Link className={'link'} to={toView}>View Submission</Link>
+                            </li>
+                          </ul>
+
+                        </nav>
+                      </div>
+                  </div>
             );
         })}
         </div>

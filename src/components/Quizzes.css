@@ -5,16 +5,15 @@
 
 .link {
     text-decoration: none;
-    padding: 1em 0;
 }
 
 .link:link {
-    color: black;
+    color: white;
 }
 
 .link:visited {
     /* color: #8f384d; */
-    color: black;
+    color: white;
 }
 
 .pageTitle {
@@ -30,7 +29,8 @@
     grid-template-columns: 1fr 2fr;
     grid-template-areas: 
     "index name"
-    "index date";
+    "index date"
+    "menuItem menuItem";
     width: 65%;
     margin: 2em auto;
     padding: 3em 0em;
@@ -46,8 +46,6 @@
     box-shadow: 0px 0px 35px 10px rgba(0,0,0,0.85);
     opacity: 0.7;
     background-color: #5297ff;
-    /* color: #ff78c0; */
-    color: white;
 }
 
 
@@ -70,4 +68,35 @@
     margin: 0 auto;
     padding: 1em;
     font-size: 1.1em;
+}
+
+.cardMenuContainer {
+    grid-area: menuItem;
+    margin-top: 2em;
+}
+
+.cardUL {
+    padding: 0;
+    justify-content: space-around;
+    text-align: center;
+    display: flex;
+}
+
+.menuList {
+    font-size: .9em;
+    /* width: 30%;
+    margin: 0 auto; */
+    display: inline-block;
+    padding: 1em 1em;
+    border: 3px solid white;
+    border-radius: 25px;
+    -webkit-box-shadow: 0px 15px 40px 10px rgba(0,0,0,0.6); 
+    box-shadow: 0px 15px 40px 10px rgba(0,0,0,0.6);
+    
+}
+
+.menuList:hover  {
+    transform: scale(1.1);
+    opacity: 0.8;
+    cursor: pointer;
 }
