@@ -1,13 +1,13 @@
-import React, { useState, useCallback, useEffect } from "react";
-import { useAuth } from "../hooks/useAuth";
-import Login from "./Login";
-import { useHistory } from "react-router-dom";
+import React, { useState, useCallback, useEffect, useReducer } from 'react';
+import { useAuth } from '../hooks/useAuth';
+import Login from './Login';
+import { useHistory, useParams } from 'react-router-dom';
 
 const questionsArOnChangeHandler = (
   questionsAr,
-  { action, questionIndex, choiceIndex, value }
+  { action, questionIndex, choiceIndex, value, questions, question }
 ) => {
-  if (action.toUpperCase() === "CHOICE_BODY_CHANGE") {
+  if (action.toUpperCase() === 'CHOICE_BODY_CHANGE') {
     return questionsAr.map(({ choices, ...rest }, qindex) => {
       return {
         ...rest,
@@ -24,7 +24,7 @@ const questionsArOnChangeHandler = (
     });
   }
 
-  if (action.toUpperCase() === "CHOICE_SELECT_CHANGE") {
+  if (action.toUpperCase() === 'CHOICE_SELECT_CHANGE') {
     return questionsAr.map(({ choices, ...rest }, qindex) => {
       return {
         ...rest,
@@ -41,7 +41,7 @@ const questionsArOnChangeHandler = (
     });
   }
 
-  if (action.toUpperCase() === "QUESTION_BODY_CHANGE") {
+  if (action.toUpperCase() === 'QUESTION_BODY_CHANGE') {
     return questionsAr.map(({ questionBody, ...rest }, qindex) => {
       return {
         ...rest,
@@ -50,34 +50,39 @@ const questionsArOnChangeHandler = (
     });
   }
 
+  if (action.toUpperCase() === 'ADDED_QUESTION') {
+    return [...questionsAr, question];
+  }
+
+  if (action.toUpperCase() === 'GET_QUESTIONS') {
+    return questions;
+  }
+
   return questionsAr;
 };
 
-const EditQuiz = ({ location: { id } }) => {
+const EditQuiz = () => {
+  const { id } = useParams();
   const { token } = useAuth();
-  const history = useHistory();
 
-  const [name, setName] = useState("");
-  const [questionsAr, setQuestionsAr] = useState([]);
+  const [name, setName] = useState('');
+  const [questionsAr, questionsDispatch] = useReducer(
+    questionsArOnChangeHandler,
+    []
+  );
 
-  const [newQuizBody, setNewQuizBody] = useState("");
+  const [newQuizBody, setNewQuizBody] = useState('');
   const [newChoices, setNewChoices] = useState([]);
 
-  const [addQuestionBtnState, setAddQuestionBtnState] = useState(false);
+  const [showAddQuestion, setShowAddQuestion] = useState(true);
 
   const addQuestionClickHandler = () => {
-    if (!addQuestionBtnState) {
-      setAddQuestionBtnState(!addQuestionBtnState);
-      setNewChoices([...newChoices, { body: "", isCorrect: false }]);
-      return;
-    }
-
-    setAddQuestionBtnState(!addQuestionBtnState);
-    setNewChoices([]);
+    setShowAddQuestion(!showAddQuestion);
+    setNewChoices([{ body: '', isCorrect: true }]);
   };
 
   const addChoiceClickHandler = () => {
-    setNewChoices([...newChoices, { body: "", isCorrect: false }]);
+    setNewChoices([...newChoices, { body: '', isCorrect: false }]);
   };
 
   const updateName = useCallback(async () => {
@@ -90,31 +95,31 @@ const EditQuiz = ({ location: { id } }) => {
     await fetch(
       `https://comp-4537-term-project-7zchu.ondigitalocean.app/api/v0/quizzes/${id}`,
       {
-        method: "PUT",
-        mode: "cors",
+        method: 'PUT',
+        mode: 'cors',
         headers: {
-          "Content-type": "application/json",
+          'Content-type': 'application/json',
           Authorization: `bearer ${token}`,
         },
         body: JSON.stringify({ quizName: name }),
       }
     );
-    window.alert("Name changed");
+    window.alert('Name changed');
   }, [name, setName, id, token]);
 
   const updateQuestion = useCallback(
     async (questionID, questionIndex, questionBody, choices) => {
-      console.log("Question ID: " + questionID);
-      console.log("Question body: " + questionBody);
-      console.log("Choices: \n" + JSON.stringify(choices));
+      console.log('Question ID: ' + questionID);
+      console.log('Question body: ' + questionBody);
+      console.log('Choices: \n' + JSON.stringify(choices));
 
       await fetch(
         `https://comp-4537-term-project-7zchu.ondigitalocean.app/api/v0/questions/${questionID}`,
         {
-          method: "PUT",
-          mode: "cors",
+          method: 'PUT',
+          mode: 'cors',
           headers: {
-            "Content-type": "application/json",
+            'Content-type': 'application/json',
             Authorization: `bearer ${token}`,
           },
           body: JSON.stringify({ body: questionBody, choices: choices }),
@@ -139,7 +144,7 @@ const EditQuiz = ({ location: { id } }) => {
     }
 
     if (newChoices.length < 2) {
-      window.alert("There must be at least 2 choice");
+      window.alert('There must be at least 2 choice');
       return;
     }
 
@@ -149,7 +154,7 @@ const EditQuiz = ({ location: { id } }) => {
     }
 
     if (newChoices.filter(({ isCorrect }) => isCorrect).length === 0) {
-      window.alert("There must be only 1 answer choice for this question");
+      window.alert('There must be only 1 answer choice for this question');
       return;
     }
 
@@ -157,10 +162,10 @@ const EditQuiz = ({ location: { id } }) => {
     await fetch(
       `https://comp-4537-term-project-7zchu.ondigitalocean.app/api/v0/questions/${id}`,
       {
-        method: "POST",
-        mode: "cors",
+        method: 'POST',
+        mode: 'cors',
         headers: {
-          "Content-type": "application/json",
+          'Content-type': 'application/json',
           Authorization: `bearer ${token}`,
         },
         body: JSON.stringify({
@@ -173,25 +178,45 @@ const EditQuiz = ({ location: { id } }) => {
     // console.log("attention here");
     // console.log(await res.json());
 
-    window.alert("Question added");
-    setNewQuizBody("");
-    setNewChoices([]);
-    setAddQuestionBtnState(false);
+    window.alert('Question added');
 
-    // window.location.reload();
-    history.push("/getquizzes");
+    setNewQuizBody('');
+    setNewChoices([]);
+    setShowAddQuestion(true);
+
+    window.location.reload();
   }, [newChoices, newQuizBody, token, id, setNewChoices, setNewQuizBody]);
+
+  const deleteQuestion = useCallback(
+    async (questionID) => {
+      await fetch(
+        `https://comp-4537-term-project-7zchu.ondigitalocean.app/api/v0/questions/${questionID}`,
+        {
+          method: 'DELETE',
+          mode: 'cors',
+          headers: {
+            Authorization: `bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
+      window.alert('Question Deleted :(');
+      window.location.reload();
+    },
+    [token]
+  );
 
   useEffect(() => {
     const getQuiz = async () => {
-      console.log("CHECKPOINT " + id);
+      console.log('CHECKPOINT ' + id);
 
       const res = await fetch(
         `https://comp-4537-term-project-7zchu.ondigitalocean.app/api/v0/quizzes/${id}?showAnswers=true`,
         {
-          method: "GET",
+          method: 'GET',
           headers: {
-            "Content-type": "application/json",
+            'Content-type': 'application/json',
             Authorization: `bearer ${token}`,
           },
         }
@@ -206,7 +231,7 @@ const EditQuiz = ({ location: { id } }) => {
 
       setName(quizName);
 
-      setQuestionsAr(questions);
+      questionsDispatch({ action: 'GET_QUESTIONS', questions });
       // questionsArDispatch(questions);
     };
 
@@ -216,11 +241,11 @@ const EditQuiz = ({ location: { id } }) => {
   console.log(questionsAr);
 
   return token ? (
-    <div className={"quizWrapper"}>
+    <div className={'quizWrapper'}>
       <input
-        type="text"
+        type='text'
         value={name}
-        placeholder="Enter name of quiz"
+        placeholder='Enter name of quiz'
         onChange={({ target: { value } }) => setName(value)}
       />
       <button onClick={updateName}>Change name</button>
@@ -230,17 +255,15 @@ const EditQuiz = ({ location: { id } }) => {
           return (
             <div key={questionID}>
               <h1>{questionIndex + 1}</h1>
-              <input type="radio" className={"decoRadioBtn"} />
+              <input type='radio' className={'decoRadioBtn'} />
               <textarea
                 value={questionBody}
                 onChange={({ target: { value } }) => {
-                  setQuestionsAr(
-                    questionsArOnChangeHandler(questionsAr, {
-                      action: "QUESTION_BODY_CHANGE",
-                      questionIndex,
-                      value,
-                    })
-                  );
+                  questionsDispatch(questionsAr, {
+                    action: 'QUESTION_BODY_CHANGE',
+                    questionIndex,
+                    value,
+                  });
                 }}
               ></textarea>
               {choices.map(
@@ -249,29 +272,25 @@ const EditQuiz = ({ location: { id } }) => {
                     <div key={choiceID}>
                       <div>
                         <input
-                          type="radio"
+                          type='radio'
                           checked={isCorrect}
                           onChange={() => {
-                            setQuestionsAr(
-                              questionsArOnChangeHandler(questionsAr, {
-                                action: "CHOICE_SELECT_CHANGE",
-                                questionIndex,
-                                choiceIndex,
-                              })
-                            );
+                            questionsDispatch(questionsAr, {
+                              action: 'CHOICE_SELECT_CHANGE',
+                              questionIndex,
+                              choiceIndex,
+                            });
                           }}
                         />
                         <textarea
                           value={choiceBody}
                           onChange={({ target: { value } }) => {
-                            setQuestionsAr(
-                              questionsArOnChangeHandler(questionsAr, {
-                                action: "CHOICE_BODY_CHANGE",
-                                questionIndex,
-                                choiceIndex,
-                                value,
-                              })
-                            );
+                            questionsDispatch(questionsAr, {
+                              action: 'CHOICE_BODY_CHANGE',
+                              questionIndex,
+                              choiceIndex,
+                              value,
+                            });
                             console.log(questionsAr);
                           }}
                         ></textarea>
@@ -292,15 +311,23 @@ const EditQuiz = ({ location: { id } }) => {
               >
                 Change question
               </button>
+              <br />
+              <button
+                onClick={() => {
+                  deleteQuestion(questionID);
+                }}
+              >
+                Delete question
+              </button>
             </div>
           );
         }
       )}
-      {addQuestionBtnState ? (
+      {!showAddQuestion ? (
         <div>
-          <input type="radio" className={"decoRadioBtn"} />
+          <input type='radio' className={'decoRadioBtn'} />
           <textarea
-            placeholder="Enter question"
+            placeholder='Enter question'
             value={newQuizBody}
             onChange={({ target: { value } }) => {
               setNewQuizBody(value);
@@ -312,7 +339,7 @@ const EditQuiz = ({ location: { id } }) => {
             return (
               <div key={i}>
                 <input
-                  type="radio"
+                  type='radio'
                   checked={isCorrect}
                   onChange={() => {
                     setNewChoices(
@@ -341,14 +368,13 @@ const EditQuiz = ({ location: { id } }) => {
               </div>
             );
           })}
-
+          <br />
           <button onClick={addChoiceClickHandler}>Add choice</button>
           <button onClick={postQuestion}>Submit</button>
         </div>
       ) : (
-        <></>
+        <button onClick={addQuestionClickHandler}>Add question</button>
       )}
-      <button onClick={addQuestionClickHandler}>Add question</button>
     </div>
   ) : (
     <Login />

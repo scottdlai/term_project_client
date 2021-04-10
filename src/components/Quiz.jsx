@@ -1,9 +1,11 @@
 import { useEffect, useState, useCallback } from 'react';
+import { useParams } from 'react-router';
 import { useAuth } from './../hooks/useAuth';
-import './Quiz.css'
+import './Quiz.css';
 
-const Quiz = ({ location: { id, name } }) => {
+const Quiz = () => {
   const { token } = useAuth();
+  const { id } = useParams();
 
   const [quizName, setQuizName] = useState('');
   const [questions, setQuestions] = useState([]);
@@ -62,8 +64,8 @@ const Quiz = ({ location: { id, name } }) => {
             Authorization: `bearer ${token}`,
           },
         }
-    );
-      
+      );
+
       const { quizName, questions } = await res.json();
 
       console.log(questions);
@@ -123,7 +125,9 @@ const Quiz = ({ location: { id, name } }) => {
           </div>
         );
       })}
-      <button className={'submitBtn'} onClick={postChoices}>Submit</button>
+      <button className={'submitBtn'} onClick={postChoices}>
+        Submit
+      </button>
     </div>
   );
 };

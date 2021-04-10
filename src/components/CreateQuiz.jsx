@@ -1,4 +1,5 @@
 import React, { useReducer, useState, useCallback } from 'react';
+import { useHistory } from 'react-router';
 import { useAuth } from '../hooks/useAuth';
 import setValueAtIndex from '../utils/setValueAtIndex';
 import './CreateQuiz.css';
@@ -73,6 +74,8 @@ const CreateQuiz = () => {
 
   const { token } = useAuth();
 
+  const history = useHistory();
+
   const createQuiz = useCallback(async () => {
     if (!quizName) {
       setQuizName("Name can't be empty");
@@ -113,7 +116,7 @@ const CreateQuiz = () => {
     );
     window.alert('Added quiz');
     setQuizName('');
-    questionsDispatch('RESET');
+    history.push('/getquizzes');
   }, [quizName, questions, token]);
 
   return token ? (
@@ -187,10 +190,15 @@ const CreateQuiz = () => {
           </div>
         );
       })}
-      <button className={'addBtn'} onClick={() => questionsDispatch({ action: 'ADD_QUESTION' })}>
+      <button
+        className={'addBtn'}
+        onClick={() => questionsDispatch({ action: 'ADD_QUESTION' })}
+      >
         Add question
       </button>
-      <button className={'addBtn addQuiz'} onClick={createQuiz}>Add Quiz</button>
+      <button className={'addBtn addQuiz'} onClick={createQuiz}>
+        Add Quiz
+      </button>
     </div>
   ) : (
     <Login />
