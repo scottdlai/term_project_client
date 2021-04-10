@@ -150,7 +150,7 @@ const EditQuiz = ({ location: { id } }) => {
         ({ questionID, questionBody, choices }, questionIndex) => {
           // console.log("hello testing " + questionIndex)
           return (
-            <div key={questionIndex}>
+            <div key={questionID}>
               <h1>{questionIndex + 1}</h1>
               <textarea
                 value={questionBody}
@@ -164,41 +164,43 @@ const EditQuiz = ({ location: { id } }) => {
                   );
                 }}
               ></textarea>
-              {choices.map(({ choiceBody, isCorrect }, choiceIndex) => {
-                return (
-                  <div key={choiceIndex}>
-                    <div>
-                      <input
-                        type='radio'
-                        checked={isCorrect}
-                        onChange={() => {
-                          setQuestionsAr(
-                            questionsArOnChangeHandler(questionsAr, {
-                              action: 'CHOICE_SELECT_CHANGE',
-                              questionIndex,
-                              choiceIndex,
-                            })
-                          );
-                        }}
-                      />
-                      <textarea
-                        value={choiceBody}
-                        onChange={({ target: { value } }) => {
-                          setQuestionsAr(
-                            questionsArOnChangeHandler(questionsAr, {
-                              action: 'CHOICE_BODY_CHANGE',
-                              questionIndex,
-                              choiceIndex,
-                              value,
-                            })
-                          );
-                          console.log(questionsAr);
-                        }}
-                      ></textarea>
+              {choices.map(
+                ({ choiceBody, isCorrect, choiceID }, choiceIndex) => {
+                  return (
+                    <div key={choiceID}>
+                      <div>
+                        <input
+                          type='radio'
+                          checked={isCorrect}
+                          onChange={() => {
+                            setQuestionsAr(
+                              questionsArOnChangeHandler(questionsAr, {
+                                action: 'CHOICE_SELECT_CHANGE',
+                                questionIndex,
+                                choiceIndex,
+                              })
+                            );
+                          }}
+                        />
+                        <textarea
+                          value={choiceBody}
+                          onChange={({ target: { value } }) => {
+                            setQuestionsAr(
+                              questionsArOnChangeHandler(questionsAr, {
+                                action: 'CHOICE_BODY_CHANGE',
+                                questionIndex,
+                                choiceIndex,
+                                value,
+                              })
+                            );
+                            console.log(questionsAr);
+                          }}
+                        ></textarea>
+                      </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                }
+              )}
               <button
                 onClick={() => {
                   updateQuestion(
