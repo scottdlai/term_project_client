@@ -22,7 +22,7 @@ const Quizzes = () => {
     };
 
     fetchQuizzes();
-  }, []);
+  }, [token]);
 
     return token ? (
         <div className={'wholeWrapper'}>

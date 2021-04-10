@@ -114,7 +114,7 @@ const CreateQuiz = () => {
     window.alert('Added quiz');
     setQuizName('');
     questionsDispatch('RESET');
-  }, [quizName, questions]);
+  }, [quizName, questions, token]);
 
   return token ? (
     <div className={'createQuizContainer'}>

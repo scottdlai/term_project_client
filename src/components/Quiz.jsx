@@ -1,5 +1,4 @@
 import { useEffect, useState, useCallback } from 'react';
-import setValueAtIndex from '../utils/setValueAtIndex';
 import { useAuth } from './../hooks/useAuth';
 import './Quiz.css'
 
@@ -49,7 +48,7 @@ const Quiz = ({ location: { id, name } }) => {
         choices: choices.map((choice) => ({ ...choice, isChecked: false })),
       }))
     );
-  }, [questions]);
+  }, [questions, id, token]);
 
   useEffect(() => {
     const fetchQuiz = async () => {
@@ -81,7 +80,7 @@ const Quiz = ({ location: { id, name } }) => {
     };
 
     fetchQuiz();
-  }, [id]);
+  }, [id, token]);
 
   return (
     <div className={'quizWrapper'}>

@@ -28,7 +28,7 @@ const Admin = () => {
     };
 
     fetchAdmin();
-  }, []);
+  }, [token]);
 
   return token ? (
     apiCounts.length > 0 ? (

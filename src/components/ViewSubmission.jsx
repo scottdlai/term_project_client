@@ -1,4 +1,4 @@
-import React, { useReducer, useState, useCallback, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import Login from './Login';
 import './ViewSubmission.css'
@@ -31,7 +31,7 @@ const ViewSubmission = ({ location: { id, name }}) => {
         }
 
         getSubmissions();
-    }, [id])
+    }, [id, token])
 
     console.log("test")
     console.log(submissions)
