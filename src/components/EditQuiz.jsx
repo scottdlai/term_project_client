@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { useAuth } from "../hooks/useAuth";
 import Login from "./Login";
+import { useHistory } from "react-router-dom";
 
 const questionsArOnChangeHandler = (
   questionsAr,
@@ -54,6 +55,7 @@ const questionsArOnChangeHandler = (
 
 const EditQuiz = ({ location: { id } }) => {
   const { token } = useAuth();
+  const history = useHistory();
 
   const [name, setName] = useState("");
   const [questionsAr, setQuestionsAr] = useState([]);
@@ -125,9 +127,12 @@ const EditQuiz = ({ location: { id } }) => {
   );
 
   const postQuestion = useCallback(async () => {
-    console.log(newQuizBody);
-    console.log(newChoices);
-
+    // console.log(newQuizBody);
+    // console.log(newChoices);
+    // console.log({
+    //   questionBody: newQuizBody,
+    //   choices: newChoices,
+    // });
     if (!newQuizBody) {
       setNewQuizBody("Name can't be empty");
       return;
@@ -148,10 +153,12 @@ const EditQuiz = ({ location: { id } }) => {
       return;
     }
 
+    // const res =
     await fetch(
       `https://comp-4537-term-project-7zchu.ondigitalocean.app/api/v0/questions/${id}`,
       {
         method: "POST",
+        mode: "cors",
         headers: {
           "Content-type": "application/json",
           Authorization: `bearer ${token}`,
@@ -163,9 +170,16 @@ const EditQuiz = ({ location: { id } }) => {
       }
     );
 
+    // console.log("attention here");
+    // console.log(await res.json());
+
     window.alert("Question added");
     setNewQuizBody("");
     setNewChoices([]);
+    setAddQuestionBtnState(false);
+
+    // window.location.reload();
+    history.push("/getquizzes");
   }, [newChoices, newQuizBody, token, id, setNewChoices, setNewQuizBody]);
 
   useEffect(() => {
