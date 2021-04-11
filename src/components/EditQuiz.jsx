@@ -259,7 +259,7 @@ const EditQuiz = () => {
               <textarea
                 value={questionBody}
                 onChange={({ target: { value } }) => {
-                  questionsDispatch(questionsAr, {
+                  questionsDispatch({
                     action: 'QUESTION_BODY_CHANGE',
                     questionIndex,
                     value,
@@ -275,7 +275,7 @@ const EditQuiz = () => {
                           type='radio'
                           checked={isCorrect}
                           onChange={() => {
-                            questionsDispatch(questionsAr, {
+                            questionsDispatch({
                               action: 'CHOICE_SELECT_CHANGE',
                               questionIndex,
                               choiceIndex,
@@ -285,7 +285,7 @@ const EditQuiz = () => {
                         <textarea
                           value={choiceBody}
                           onChange={({ target: { value } }) => {
-                            questionsDispatch(questionsAr, {
+                            questionsDispatch({
                               action: 'CHOICE_BODY_CHANGE',
                               questionIndex,
                               choiceIndex,
