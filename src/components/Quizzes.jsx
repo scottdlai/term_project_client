@@ -38,21 +38,27 @@ const Quizzes = () => {
   const [quizzes, setQuizzes] = useState([]);
   const { token } = useAuth();
 
-  const deleteQuiz = useCallback(async (id) => {
-    await fetch(
-      `https://comp-4537-term-project-7zchu.ondigitalocean.app/api/v0/quizzes/${id}`,
-      {
-        method: 'DELETE',
-        mode: 'cors',
-        headers: {
-          Authorization: `bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-      }
-    );
-
-    window.alert('Quiz deleted');
-  });
+  const deleteQuiz = useCallback(
+    async (id) => {
+      console.log('in delete');
+      const res = await fetch(
+        `https://comp-4537-term-project-7zchu.ondigitalocean.app/api/v0/quizzes/${id}`,
+        {
+          method: 'DELETE',
+          mode: 'cors',
+          headers: {
+            Authorization: `bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      window.alert('Quiz deleted');
+      setQuizzes((quizzes) =>
+        quizzes.filter(({ id: quizID }) => quizID !== id)
+      );
+    },
+    [token, setQuizzes]
+  );
 
   useEffect(() => {
     const fetchQuizzes = async () => {
@@ -96,13 +102,11 @@ const Quizzes = () => {
 
         return (
           <div className={'gridContainer'} key={`quiz-${id}`}>
-            <div className={`deleteBtnContainer ${classes.mainContainer}`}>
-              <IconButton
-                className={classes.btnContainer}
-                onClick={() => {
-                  deleteQuiz(id);
-                }}
-              >
+            <div
+              className={`deleteBtnContainer ${classes.mainContainer}`}
+              onClick={() => deleteQuiz(id)}
+            >
+              <IconButton className={classes.btnContainer}>
                 <CancelIcon className={classes.btn} />
               </IconButton>
             </div>
