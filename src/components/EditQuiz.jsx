@@ -249,7 +249,7 @@ const EditQuiz = () => {
         onChange={({ target: { value } }) => setName(value)}
       />
       <button onClick={updateName}>Change name</button>
-      {questionsAr.map(
+      {(questionsAr ?? []).map(
         ({ questionID, questionBody, choices }, questionIndex) => {
           // console.log("hello testing " + questionIndex)
           return (
